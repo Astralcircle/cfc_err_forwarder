@@ -69,5 +69,5 @@ do -- Base game error hooks
         local fileName = firstEntry.File or "Unknown"
         local fileLine = firstEntry.Line or 0
         receiver( ply, err, firstEntry.File, firstEntry.Line, err, newStack )
-    end)
+    end )
 end
