@@ -63,11 +63,11 @@ do -- Base game error hooks
 
     hook.Add( "OnClientLuaError", "CFC_RuntimeErrorForwarder", function( err, ply, stack, _ )
         if not Config.clientEnabled:GetBool() then return end
-        local newStack = convertStack( stack --[[@as GmodOnLuaErrorStack]] )
 
-        local firstEntry = stack[1] or {}
-        local fileName = firstEntry.File or "Unknown"
-        local fileLine = firstEntry.Line or 0
+        local firstEntry = stack[1]
+        if not firstEntry then return end
+
+        local newStack = convertStack( stack --[[@as GmodOnLuaErrorStack]] )
         receiver( ply, err, firstEntry.File, firstEntry.Line, err, newStack )
     end )
 end
