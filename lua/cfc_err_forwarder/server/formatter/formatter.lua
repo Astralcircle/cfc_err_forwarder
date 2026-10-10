@@ -117,12 +117,11 @@ function ErrorForwarder.Formatter( data )
         } )
     end
 
-    local description
-    do
-        local sourceText = getSourceText( data )
-        local errorText = code( truncate( gmodErrorText( data ), 3700 ) )
+    local title = realm .. " Error"
+    local sourceText = getSourceText( data )
 
-        description = sourceText ~= "" and ( sourceText .. "\n" .. errorText ) or errorText
+    if sourceText ~= "" then
+        title = title .. " (" .. sourceText .. ")"
     end
 
     return {
@@ -130,9 +129,9 @@ function ErrorForwarder.Formatter( data )
         embeds = {
             {
                 color = client and clientError or serverError,
-                title = realm .. " Error",
+                title = title,
                 author = { name = GetHostName() },
-                description = description,
+                description = code( truncate( gmodErrorText( data ), 3700 ) ),
                 fields = nonil( fields )
             }
         }
